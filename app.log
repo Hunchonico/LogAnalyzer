@@ -1,0 +1,4 @@
+2026-02-20 07:18:12 [INFO] [core] started 
+2026-02-20 07:18:13 [ERROR] [db] failed id=123 
+2026-02-20 07:18:14 [ERROR] [db] failed id=999 
+2026-02-20 07:18:15 [WARNING] [net] timeout after 30s 
