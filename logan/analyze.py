@@ -51,7 +51,6 @@ def analyze(entries: Iterable[LogEntry], top_n: int = 10) -> AnalysisResult:
     time_start = ts_list[0].isoformat(sep=" ") if ts_list else None
     time_end = ts_list[-1].isoformat(sep=" ") if ts_list else None
 
-    # Errors (ERROR/CRITICAL)
     err_entries = [e for e in entries if e.level in ("ERROR", "CRITICAL")]
     err_msgs = Counter(_normalize_message(e.message) for e in err_entries if e.message)
 

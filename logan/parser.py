@@ -12,17 +12,14 @@ LEVEL_NORMALIZE = {
     "FATAL": "CRITICAL",
 }
 
-# Format 1: 2026-02-20 07:18:12 [INFO] [module] message
 RE_FMT1 = re.compile(
     r"^(?P<ts>\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})\s+\[(?P<lvl>[A-Z]+)\]\s+\[(?P<mod>[^\]]+)\]\s+(?P<msg>.*)$"
 )
 
-# Format 2: 2026-02-20T07:18:12Z INFO module: message
 RE_FMT2 = re.compile(
     r"^(?P<ts>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?)\s+(?P<lvl>[A-Z]+)\s+(?P<mod>[^:]+):\s*(?P<msg>.*)$"
 )
 
-# Format 3 (fallback): ... ERROR ... message
 RE_LEVEL_ANYWHERE = re.compile(r"\b(?P<lvl>DEBUG|INFO|WARNING|WARN|ERROR|CRITICAL|FATAL)\b")
 
 
@@ -36,7 +33,6 @@ class LogEntry:
 
 
 def _parse_timestamp(ts: str) -> Optional[datetime]:
-    # Best effort parsing (no timezone handling here)
     ts = ts.strip().replace("T", " ")
     ts = ts.rstrip("Z")
     for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M:%S.%f"):
@@ -73,7 +69,6 @@ def parse_line(line: str) -> LogEntry:
         msg = m.group("msg").strip()
         return LogEntry(raw=line, timestamp=ts, level=lvl, module=mod, message=msg)
 
-    # fallback: find level anywhere, keep rest as message
     m = RE_LEVEL_ANYWHERE.search(line)
     lvl = normalize_level(m.group("lvl")) if m else "UNKNOWN"
     return LogEntry(raw=line, timestamp=None, level=lvl, module="", message=line.strip())

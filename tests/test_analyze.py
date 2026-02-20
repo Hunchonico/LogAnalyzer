@@ -13,4 +13,4 @@ def test_analyze_counts():
     assert res.total_lines == 3
     assert res.level_counts["ERROR"] == 2
     assert res.top_modules[0][0] == "db"
-    assert res.top_error_messages[0][1] == 2  # normalized groups ids
+    assert res.top_error_messages[0][1] == 2 
