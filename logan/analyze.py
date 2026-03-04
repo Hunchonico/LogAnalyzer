@@ -24,11 +24,7 @@ class AnalysisResult:
 
 
 def _normalize_message(msg: str) -> str:
-    """
-    Normalize to group similar messages:
-    - replace numbers/hex IDs with <N>/<HEX>
-    - trim extra spaces
-    """
+    
     s = msg.strip()
     s = re.sub(r"\b0x[0-9a-fA-F]+\b", "<HEX>", s)
     s = re.sub(r"\b\d+\b", "<N>", s)
